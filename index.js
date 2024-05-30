@@ -10,13 +10,17 @@ const app = express();
 
 app.use(express.json());
 
-app.use('/api/links', linkRoutes);
-app.use('/api/users', userRoutes);
+app.use('/links', linkRoutes);
+app.use('/users', userRoutes);
+app.set('trust proxy', true);  
+app.get('/', (req, res) => {
+  res.send('Welcome to the URL Shortener API');
+});
 
 const PORT =  3000;
 await mongoose.connect('mongodb://127.0.0.1:27017/TinyUrl', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
   })
-.then(() => app.listen(PORT, () => console.log(`Server running on port ${PORT}`)))
+.then(() => app.listen(PORT, () => console.log(`Example app listening on http://localhost:${PORT}`)))
 .catch(err => console.log(err));
+
+  
